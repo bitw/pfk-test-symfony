@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
+</head>
+<body>
+<div class="container">
+    {% include '_layers/navbar.twig' %}
+    {% block notices %}
+        {% for flash_message in app.session.flashBag.get('notices') %}
+            <div class="alert alert-{{ flash_message.type }}">
+                {{ flash_message.text }}
+            </div>
+        {% endfor %}
+    {% endblock %}
+    <div class="row">
+        <div class="col-md-12">
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+</div>
+<script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+{% block javascripts %}{% endblock %}
+</body>
+</html>

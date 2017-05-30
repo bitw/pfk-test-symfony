@@ -1,0 +1,63 @@
+{% extends "_layouts/default.twig" %}
+
+{% block title %}Аптеки{% endblock %}
+
+{% block body %}
+	<h1>Аптеки</h1>
+	{% if adresses %}
+		<table class="table table-bordered table-hover">
+			<thead>
+			<tr>
+				<th>Адрес</th>
+				<th class="col-xs-1"></th>
+			</tr>
+			</thead>
+			{% for address in adresses %}
+				<tr>
+					<td>{{ address.address }}</td>
+					<td class="text-center">
+						<button class="btn btn-xs btn-primary js-button-edit" data-val="{{ address.address }}"><i class="glyphicon glyphicon-pencil"></i></button>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+
+		<form action="{{ path('address.update') }}" method="post">
+			<div class="modal fade" id="modalEditAddress" tabindex="-1" role="dialog" aria-labelledby="">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Закрыть"><span
+										aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="myModalLabel">Редактирование адреса</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<input type="hidden" name="old_value">
+								<input class="form-control" type="text" name="new_value">
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">Сохранить</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		{% block javascripts %}
+			<script>
+				$(function () {
+					$('.js-button-edit').click(function () {
+						$this = $(this);
+						$('input[name="old_value"],input[name="new_value"]').val($this.data('val'));
+						$('#modalEditAddress').modal('show');
+					});
+				});
+			</script>
+		{% endblock %}
+	{% else %}
+		{% include 'AppBundle:Import:alert.html.twig' %}
+	{% endif %}
+{% endblock %}
+

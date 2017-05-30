@@ -1,0 +1,34 @@
+{% extends '_layouts/default.twig' %}
+
+{% block body %}
+	<h1>Импортирование данных</h1>
+	{% if app.session.flashbag.has('count') %}
+		<div class="alert alert-success">Добавлено {{ app.session.flashbag.get('count').0 }} записей</div>
+	{% endif %}
+	<div>
+		{{ form_start(form) }}
+		<div class="row">
+			<div class="form-group">
+				<div class="col-md-3">
+					{{ form_widget(form.distributor, {'attr': {'class': 'form-control'}}) }}
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						{{ form_widget(form.file) }}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+				<div class="checkbox">
+					<label>
+						{{ form_widget(form.replace) }} Обновить
+					</label>
+				</div>
+			</div>
+		</div>
+		<button class="btn btn-primary" type="submit">Импортировать</button>
+		{{ form_end(form) }}
+	</div>
+{% endblock %}
